@@ -20,7 +20,7 @@ const Header = () => {
                 About Us
               </Nav.Link>
               <Nav.Link as={NavLink} to="/menu">
-                menu
+                Menu
               </Nav.Link>
             </Nav>
           </Navbar.Collapse>
