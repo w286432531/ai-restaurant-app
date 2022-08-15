@@ -11,18 +11,205 @@ datasource db {
   // shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
 }
 
-model User {
-  id    Int     @id @default(autoincrement())
-  email String  @unique
-  name  String?
-  posts Post[]
+model SiteMain {
+  id                Int     @id @default(autoincrement())
+  ///main site name
+  siteName          String?
+  ///brand image in header
+  brandImageUrl     String?
+  ///turn online ordering on or off
+  onlineOrderToggle Boolean @default(false)
+  ///tell customer the store is currently closed due to holiday or special occasion.
+  isOpen            Boolean @default(true)
+  ///business phone number
+  phone             String
 }
 
-model Post {
-  id        Int     @id @default(autoincrement())
-  title     String
-  content   String?
-  published Boolean @default(false)
-  author    User    @relation(fields: [authorId], references: [id])
-  authorId  Int
+model BusinessHour {
+  id        Int      @id @default(autoincrement())
+  weekDay   String
+  openTime  DateTime @db.Time()
+  closeTime DateTime @db.Time()
+  ///store time zone
+  timeZone  String?
+}
+
+///Store user role information
+model Role {
+  id                  Int     @id @default(autoincrement())
+  role                String
+  ///if another language is used
+  alternativeRoleName String?
+  Users               User[]
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  username  String   @unique
+  ///encrypted
+  password  String
+  email     String   @unique
+  firstName String
+  lastName  String
+  userRole  Role     @relation(fields: [roleId], references: [id])
+  roleId    Int
+  phone     String?
+  createdAt DateTime @default(now())
+  cart      Json?
+  address   Address?
+  orders    Order[]
+}
+
+model Address {
+  user       User    @relation(fields: [userId], references: [id])
+  userId     Int     @id @unique
+  address1   String?
+  address2   String?
+  state      String?
+  city       String?
+  zipCode    String?
+  Latitude   String?
+  Longtitude String?
+}
+
+model Order {
+  id                  Int           @id @default(autoincrement())
+  user                User          @relation(fields: [userId], references: [id])
+  userId              Int
+  orderCreatedAt      DateTime      @default(now())
+  total               Int
+  //todo create a payment method table
+  paymentMethod       String
+  paymentConfirmation String
+  //todo create a discount table
+  discountAmount      Int           @default(0)
+  paymentAmount       Int
+  items               OrderedItem[]
+}
+
+///ordered item in orders
+model OrderedItem {
+  id                Int                @unique @default(autoincrement())
+  order             Order              @relation(fields: [orderId], references: [id])
+  orderId           Int
+  itemOption        ItemOption         @relation(fields: [itemOptionId], references: [id])
+  itemOptionId      Int
+  addOns            OrderedItemAddOn[]
+  itemTotal         Int
+  quantity          Int                @default(1)
+  additionalRequest String?
+  //internal feedback from customer
+  feedback          String?
+
+  @@id([id, orderId, itemOptionId])
+}
+
+model OrderedItemAddOn {
+  orderedItem   OrderedItem @relation(fields: [orderedItemId], references: [id])
+  orderedItemId Int
+  itemAddOn     ItemAddOn   @relation(fields: [itemAddOnId], references: [id])
+  itemAddOnId   Int
+  quantity      Int         @default(1)
+
+  @@id([orderedItemId, itemAddOnId])
+}
+
+///menu item base
+model Item {
+  id              Int              @id @default(autoincrement())
+  name            String
+  ///if another language is used
+  alternativeName String?
+  description     String?
+  itemCategory    Category         @relation(fields: [categoryId], references: [id])
+  categoryId      Int
+  imageUrl        String?
+  isAvailable     Boolean          @default(true)
+  ///allow customer to remove ingredients
+  //todo add remove ingredient functions
+  customizable    Boolean          @default(false)
+  options         ItemOption[]
+  ingredients     ItemIngredient[]
+  addOns          ItemAddOn[]
+}
+
+///menu items categories
+model Category {
+  id              Int     @id @default(autoincrement())
+  name            String
+  ///if another language is used
+  alternativeName String?
+  items           Item[]
+}
+
+model Ingredient {
+  id              Int              @id @default(autoincrement())
+  name            String
+  ///if another language is used
+  alternativeName String?
+  items           ItemIngredient[]
+  ///if this ingredient can be a add on
+  isAddOn         Boolean          @default(true)
+  defaultPrice    Int              @default(0)
+  type            IngredientType   @relation(fields: [typeId], references: [id])
+  typeId          Int
+  itemAddOns      ItemAddOn[]
+}
+
+model IngredientType {
+  id              Int          @id @default(autoincrement())
+  name            String
+  isUnique        Boolean      @default(false)
+  ///if another language is used
+  alternativeName String?
+  ingredients     Ingredient[]
+}
+
+///ingredient contained in the menu item
+model ItemIngredient {
+  item         Item       @relation(fields: [itemId], references: [id])
+  itemId       Int
+  ingredient   Ingredient @relation(fields: [ingredientId], references: [id])
+  ingredientId Int
+
+  @@id([itemId, ingredientId])
+}
+
+///options for menu item
+model Option {
+  id              Int          @id @default(autoincrement())
+  name            String
+  ///if another language is used
+  alternativeName String?
+  description     String?
+  items           ItemOption[]
+}
+
+///menu item with options, used in orderedItem table
+model ItemOption {
+  id           Int           @unique @default(autoincrement())
+  item         Item          @relation(fields: [itemId], references: [id])
+  itemId       Int
+  option       Option        @relation(fields: [optionId], references: [id])
+  optionId     Int
+  price        Int
+  description  String?
+  OrderedItems OrderedItem[]
+
+  @@id([id, itemId])
+}
+
+///avaliable ingredient as add on for menu item
+model ItemAddOn {
+  id           Int                @unique @default(autoincrement())
+  item         Item               @relation(fields: [itemId], references: [id])
+  itemId       Int
+  ingredient   Ingredient         @relation(fields: [ingredientId], references: [id])
+  ingredientId Int
+  customPrice  Boolean            @default(false)
+  ///if customPrice is true, use this price, otherwise use default price in ingredient table
+  price        Int                @default(0)
+  orderItems   OrderedItemAddOn[]
+
+  @@id([id, itemId, ingredientId])
 }
