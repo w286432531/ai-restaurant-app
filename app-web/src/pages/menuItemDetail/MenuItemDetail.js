@@ -1,5 +1,7 @@
 import React from "react";
 const MenuItemDetail = () => {
-  return;
+  return (
+    <><h1>This is menu detail page</h1></>
+  )
 };
 export default MenuItemDetail;

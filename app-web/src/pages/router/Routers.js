@@ -1,10 +1,10 @@
 import React from "react";
 import { Routes, Route  } from "react-router-dom";
-import Home from "../pages/Home";
-import AboutUs from "../pages/AboutUs";
-import Menu from "../pages/Menu";
-import ErrorPage from "../pages/Error";
-import MenuItemDetail from "../pages/MenuItemDetail";
+import Home from "../home/Home";
+import AboutUs from "../aboutUs/AboutUs";
+import Menu from "../menu/Menu";
+import ErrorPage from "../error/Error";
+import MenuItemDetail from "../menuItemDetail/MenuItemDetail";
 
 const Routers = () => {
     return (
@@ -17,4 +17,5 @@ const Routers = () => {
       </Routes>
     );
 }
+
 export default Routers
