@@ -1,6 +1,10 @@
 main {
-  min-height: 80vh;
+  min-height: 50vh;
+  margin: 2em;
 }
-body {
-  background-color: #DBE2EF;
+.center-text {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
 }

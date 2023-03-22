@@ -99,8 +99,8 @@ CREATE TABLE "OrderedItemAddOn" (
 -- CreateTable
 CREATE TABLE "Item" (
     "id" SERIAL NOT NULL,
-    "name" TEXT NOT NULL,
-    "alternativeName" TEXT,
+    "itemName" TEXT NOT NULL,
+    "alternativeItemName" TEXT,
     "description" TEXT,
     "categoryId" INTEGER NOT NULL,
     "imageUrl" TEXT,
@@ -113,7 +113,7 @@ CREATE TABLE "Item" (
 -- CreateTable
 CREATE TABLE "Category" (
     "id" SERIAL NOT NULL,
-    "name" TEXT NOT NULL,
+    "categoryName" TEXT NOT NULL,
     "alternativeName" TEXT,
 
     CONSTRAINT "Category_pkey" PRIMARY KEY ("id")
@@ -122,8 +122,8 @@ CREATE TABLE "Category" (
 -- CreateTable
 CREATE TABLE "Ingredient" (
     "id" SERIAL NOT NULL,
-    "name" TEXT NOT NULL,
-    "alternativeName" TEXT,
+    "ingredientName" TEXT NOT NULL,
+    "alternativeIngredientName" TEXT,
     "isAddOn" BOOLEAN NOT NULL DEFAULT true,
     "defaultPrice" INTEGER NOT NULL DEFAULT 0,
     "typeId" INTEGER NOT NULL,
@@ -134,9 +134,9 @@ CREATE TABLE "Ingredient" (
 -- CreateTable
 CREATE TABLE "IngredientType" (
     "id" SERIAL NOT NULL,
-    "name" TEXT NOT NULL,
+    "ingredientTypeName" TEXT NOT NULL,
     "isUnique" BOOLEAN NOT NULL DEFAULT false,
-    "alternativeName" TEXT,
+    "alternativeIngredientTypeName" TEXT,
 
     CONSTRAINT "IngredientType_pkey" PRIMARY KEY ("id")
 );
@@ -152,8 +152,8 @@ CREATE TABLE "ItemIngredient" (
 -- CreateTable
 CREATE TABLE "Option" (
     "id" SERIAL NOT NULL,
-    "name" TEXT NOT NULL,
-    "alternativeName" TEXT,
+    "optionName" TEXT NOT NULL,
+    "alternativeOptionName" TEXT,
     "description" TEXT,
 
     CONSTRAINT "Option_pkey" PRIMARY KEY ("id")
@@ -182,6 +182,9 @@ CREATE TABLE "ItemAddOn" (
 );
 
 -- CreateIndex
+CREATE UNIQUE INDEX "Role_role_key" ON "Role"("role");
+
+-- CreateIndex
 CREATE UNIQUE INDEX "User_username_key" ON "User"("username");
 
 -- CreateIndex
@@ -192,6 +195,21 @@ CREATE UNIQUE INDEX "Address_userId_key" ON "Address"("userId");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "OrderedItem_id_key" ON "OrderedItem"("id");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Item_itemName_key" ON "Item"("itemName");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Category_categoryName_key" ON "Category"("categoryName");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Ingredient_ingredientName_key" ON "Ingredient"("ingredientName");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "IngredientType_ingredientTypeName_key" ON "IngredientType"("ingredientTypeName");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Option_optionName_key" ON "Option"("optionName");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "ItemOption_id_key" ON "ItemOption"("id");
