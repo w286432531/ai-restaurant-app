@@ -37,7 +37,7 @@ model BusinessHour {
 ///Store user role information
 model Role {
   id                  Int     @id @default(autoincrement())
-  role                String
+  role                String @unique
   ///if another language is used
   alternativeRoleName String?
   Users               User[]
@@ -116,53 +116,55 @@ model OrderedItemAddOn {
 
 ///menu item base
 model Item {
-  id              Int              @id @default(autoincrement())
-  name            String
+  id                  Int              @id @default(autoincrement())
+  itemName            String           @unique
   ///if another language is used
-  alternativeName String?
-  description     String?
-  itemCategory    Category         @relation(fields: [categoryId], references: [id])
-  categoryId      Int
-  imageUrl        String?
-  isAvailable     Boolean          @default(true)
+  alternativeItemName String?
+  description         String?
+  itemCategory        Category         @relation(fields: [categoryId], references: [id])
+  categoryId          Int
+  imageUrl            String?
+  isAvailable         Boolean          @default(true)
   ///allow customer to remove ingredients
   //todo add remove ingredient functions
-  customizable    Boolean          @default(false)
-  options         ItemOption[]
-  ingredients     ItemIngredient[]
-  addOns          ItemAddOn[]
+  customizable        Boolean          @default(false)
+  //options for the item example: small large lunch dinner
+  options             ItemOption[]
+  ingredients         ItemIngredient[]
+  //avaliable add on for this item
+  addOns              ItemAddOn[]
 }
 
 ///menu items categories
 model Category {
   id              Int     @id @default(autoincrement())
-  name            String
+  categoryName    String  @unique
   ///if another language is used
   alternativeName String?
   items           Item[]
 }
 
 model Ingredient {
-  id              Int              @id @default(autoincrement())
-  name            String
+  id                        Int              @id @default(autoincrement())
+  ingredientName            String           @unique
   ///if another language is used
-  alternativeName String?
-  items           ItemIngredient[]
+  alternativeIngredientName String?
+  items                     ItemIngredient[]
   ///if this ingredient can be a add on
-  isAddOn         Boolean          @default(true)
-  defaultPrice    Int              @default(0)
-  type            IngredientType   @relation(fields: [typeId], references: [id])
-  typeId          Int
-  itemAddOns      ItemAddOn[]
+  isAddOn                   Boolean          @default(true)
+  defaultPrice              Int              @default(0)
+  type                      IngredientType   @relation(fields: [typeId], references: [id])
+  typeId                    Int
+  itemAddOns                ItemAddOn[]
 }
 
 model IngredientType {
-  id              Int          @id @default(autoincrement())
-  name            String
-  isUnique        Boolean      @default(false)
+  id                            Int          @id @default(autoincrement())
+  ingredientTypeName            String       @unique
+  isUnique                      Boolean      @default(false)
   ///if another language is used
-  alternativeName String?
-  ingredients     Ingredient[]
+  alternativeIngredientTypeName String?
+  ingredients                   Ingredient[]
 }
 
 ///ingredient contained in the menu item
@@ -177,12 +179,12 @@ model ItemIngredient {
 
 ///options for menu item
 model Option {
-  id              Int          @id @default(autoincrement())
-  name            String
+  id                    Int          @id @default(autoincrement())
+  optionName            String       @unique
   ///if another language is used
-  alternativeName String?
-  description     String?
-  items           ItemOption[]
+  alternativeOptionName String?
+  description           String?
+  items                 ItemOption[]
 }
 
 ///menu item with options, used in orderedItem table

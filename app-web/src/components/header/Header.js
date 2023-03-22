@@ -1,18 +1,19 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { Navbar, Nav, Container } from "react-bootstrap";
-import './Header.module.scss';
-import './Header.scss';
+import style from "./Header.module.scss";
+import "./Header.scss";
 const Header = () => {
   return (
     <header>
       <Navbar className="py-3" bg="light" expand="lg">
         <Container>
-          <Navbar.Brand as={NavLink} to="/">
-            Restaurant
+          <Navbar.Brand as={Link} to="/">
+            China Garden
           </Navbar.Brand>
+          <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
-            <Nav className="ms-auto">
+            <Nav className="navbar-container">
               <Nav.Link as={NavLink} to="/">
                 Home
               </Nav.Link>
