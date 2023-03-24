@@ -1,53 +1,45 @@
 import React, { useState, useEffect } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import Item from "../../components/item/Item";
+import axios from "axios";
+import { useQuery } from "@tanstack/react-query";
 import "./Menu.scss";
-
-const menuCategory = [
-  { CategoryId: 0, Name: "Appetizers" },
-  { CategoryId: 1, Name: "Lunch" },
-  { CategoryId: 2, Name: "Dinner" },
-];
-
-let menuItems = [
-  [
-    { 
-      ItemId: 0, 
-      Name: "Egg roll",
-    },
-    { ItemId: 1, Name: "Chicken wing" },
-    { ItemId: 2, Name: "Spring roll" },
-  ],
-  [
-    { ItemId: 3, Name: "Chicken with broccoli" },
-    { ItemId: 4, Name: "Pepper Steak" },
-    { ItemId: 5, Name: "Chicken Lo mein" },
-  ],
-  [
-    { ItemId: 6, Name: "Sesame Chicken" },
-    { ItemId: 7, Name: "General Tso Chicken" },
-    { ItemId: 8, Name: "Orange Chicken" },
-  ],
-];
+import useMenuStore from "../../store/menuReducer";
 
 const Menu = () => {
   const [showAllCategory, setShowAllCategory] = useState(true);
   const [currentCategoryId, setCurrentCategoryId] = useState([]);
-  
-  const selectCategory = (categoryId) => {
 
+  const selectCategory = (categoryId) => {
     setShowAllCategory(false);
-    
     setCurrentCategoryId(categoryId);
   };
-  
+
   const selectAllCategory = () => {
     setShowAllCategory(true);
   };
 
-  useEffect(() => {
-    // setShowAllCategory(false);
-  }, []);
+  const { isLoading, isError, data, error, refetch } = useQuery(
+    ["WholeMenu"],
+    () => axios.get("/api/category/").then((res) => res.data)
+    
+  );
+  //use react-loading-skeleton
+  if (isLoading) return "Loading...";
+
+  if (error) return "An error has occurred: " + error.message;
+  let allItems = [];
+  for (let d of data) {
+    allItems.push(d.items);
+    // console.log(d.items);
+  }
+  let categoryItems = []
+  if (!showAllCategory){
+    categoryItems = allItems.filter(
+      (category) => category[0].categoryId === currentCategoryId
+    );
+    console.log(categoryItems);
+  } 
 
   return (
     <Container>
@@ -57,13 +49,13 @@ const Menu = () => {
             <li className="nav-item" onClick={() => selectAllCategory()}>
               Show all
             </li>
-            {menuCategory.map((x) => (
+            {data.map((category) => (
               <li
                 className="nav-item"
-                key={x.CategoryId}
-                onClick={() => selectCategory(x.CategoryId)}
+                key={category.id}
+                onClick={() => selectCategory(category.id)}
               >
-                {x.Name}
+                {category.categoryName}
               </li>
             ))}
           </ul>
@@ -71,15 +63,15 @@ const Menu = () => {
         <Col sm={9}>
           <Row className="text-center">
             {showAllCategory
-              ? menuItems.map((x) =>
-                  x.map((item) => (
-                    <Col key={item.ItemId} sm={12} md={6} lg={4}>
+              ? allItems.map((items) =>
+                  items.map((item) => (
+                    <Col key={item.id} sm={12} md={6} lg={4}>
                       <Item item={item} />
                     </Col>
                   ))
                 )
-              : menuItems[currentCategoryId].map((item) => (
-                  <Col key={item.ItemId} sm={12} md={6} lg={4}>
+              : categoryItems[0].map((item) => (
+                  <Col key={item.id} sm={12} md={6} lg={4}>
                     <Item item={item} />
                   </Col>
                 ))}
