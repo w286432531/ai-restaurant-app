@@ -6,6 +6,7 @@ CREATE TABLE "SiteMain" (
     "onlineOrderToggle" BOOLEAN NOT NULL DEFAULT false,
     "isOpen" BOOLEAN NOT NULL DEFAULT true,
     "phone" TEXT NOT NULL,
+    "menuVersion" INTEGER NOT NULL,
 
     CONSTRAINT "SiteMain_pkey" PRIMARY KEY ("id")
 );
