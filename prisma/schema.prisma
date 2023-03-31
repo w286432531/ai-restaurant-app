@@ -23,6 +23,7 @@ model SiteMain {
   isOpen            Boolean @default(true)
   ///business phone number
   phone             String
+  menuVersion       Int     
 }
 
 model BusinessHour {

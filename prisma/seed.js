@@ -9,6 +9,7 @@ async function main() {
     create: {
       siteName: "china garden",
       phone: "2162263434",
+      menuVersion:10
     },
   });
   console.log(chinaGarden);
@@ -210,6 +211,10 @@ async function main() {
     update: {},
     create: {
       itemName: "egg roll",
+      description:
+        "An egg roll is a savory Chinese dish that consists of a crispy, fried wrapper filled with a variety of chopped vegetables such as cabbage, carrots, and bean sprouts, as well as ground meat such as pork or chicken. The filling is seasoned with a blend of spices and soy sauce, giving the egg roll its distinct flavor. Egg rolls are a popular appetizer in Chinese cuisine and are often served alongside sweet and sour sauce or hot mustard for dipping.",
+      imageUrl:
+        "https://drive.google.com/uc?export=view&id=1-PNeLyOWtZ98ewFTJWX_YjHy7UTtckSX",
       ingredients: {
         create: [
           {
@@ -244,7 +249,10 @@ async function main() {
     update: {},
     create: {
       itemName: "spring roll",
-      ingredients: {
+      description:
+        "A fried spring roll is a delicious and crispy Chinese appetizer that consists of a thin pastry wrapper filled with a variety of ingredients such as shredded vegetables, bean sprouts, and sometimes meat or seafood. The filling is typically seasoned with spices and soy sauce for added flavor. The spring roll is then deep-fried until golden and crispy, giving it a satisfying crunch. Fried spring rolls are commonly served as an appetizer or snack in Chinese cuisine and are often enjoyed with a dipping sauce such as sweet and sour or chili sauce.",
+      imageUrl:"https://drive.google.com/uc?export=view&id=1-6NIF3Of_cP7kM957l-h2xym87x2_w7l",
+        ingredients: {
         create: [
           {
             ingredient: {
@@ -278,6 +286,10 @@ async function main() {
     update: {},
     create: {
       itemName: "fried chicken wing",
+      description:
+        "Fried chicken wings are a classic Chinese dish that are known for their crispy and flavorful coating. The wings are typically seasoned with a blend of spices and herbs, then coated in a batter made from flour and cornstarch before being deep-fried until golden and crispy. The result is a deliciously crunchy exterior that gives way to juicy and tender meat inside. Fried chicken wings are often served as an appetizer or snack in Chinese cuisine and can be enjoyed plain or with a variety of sauces, such as sweet and sour, honey mustard, or spicy chili.",
+      imageUrl:
+        "https://drive.google.com/uc?export=view&id=1-OsWSy19_QD5NnyZYtgyLSe1Eg96mFsF",
       ingredients: {
         create: {
           ingredient: {
@@ -306,6 +318,10 @@ async function main() {
     update: {},
     create: {
       itemName: "chicken with broccoli",
+      description:
+        "Chicken and broccoli is a classic Chinese dish that is loved for its simplicity and delicious flavor. The dish typically consists of tender pieces of chicken that are stir-fried with fresh broccoli florets and a savory sauce made from a blend of soy sauce, garlic, and ginger. The result is a deliciously fragrant and satisfying meal that is both nutritious and flavorful. Chicken and broccoli is a popular choice for those looking for a healthier option in Chinese cuisine, as it is low in calories and high in protein and fiber. It is often served over a bed of steaming white rice for a filling and satisfying meal.",
+      imageUrl:
+        "https://drive.google.com/uc?export=view&id=1-52fS19zB-aYnN2M1dN6JQUHQ26YRgem",
       ingredients: {
         create: [
           {
@@ -357,56 +373,64 @@ async function main() {
       },
     },
   });
-    const generalChicken = await prisma.item.upsert({
-      where: { itemName: "general tso's chicken" },
-      update: {},
-      create: {
-        itemName: "general tso's chicken",
-        ingredients: {
-          create: [
-            {
-              ingredient: {
-                connect: { ingredientName: "chicken" },
-              },
+  const generalChicken = await prisma.item.upsert({
+    where: { itemName: "general tso's chicken" },
+    update: {},
+    create: {
+      itemName: "general tso's chicken",
+      description:
+        "General Tso's chicken is a beloved Chinese dish that is known for its spicy and sweet flavor. The dish consists of tender pieces of chicken that are first battered and then deep-fried until crispy. The chicken is then tossed in a savory sauce made from a blend of soy sauce, vinegar, sugar, and chili flakes, which gives it its signature sweet and spicy taste. General Tso's chicken is typically served over a bed of steaming white rice and is a popular choice for those looking for a delicious and satisfying meal. It is a perfect balance of sweet and savory flavors with a touch of heat that is sure to please any palate.",
+      imageUrl:
+        "https://drive.google.com/uc?export=view&id=1-HnnLg9nUc0lOrd2G5dyIN0pDme5sgU3",
+      ingredients: {
+        create: [
+          {
+            ingredient: {
+              connect: { ingredientName: "chicken" },
             },
-            {
-              ingredient: {
-                connect: { ingredientName: "broccoli" },
-              },
+          },
+          {
+            ingredient: {
+              connect: { ingredientName: "broccoli" },
             },
-            {
-              ingredient: {
-                connect: { ingredientName: "general tso sauce" },
-              },
+          },
+          {
+            ingredient: {
+              connect: { ingredientName: "general tso sauce" },
             },
-          ],
-        },
-        options: {
-          create: [
-            {
-              option: {
-                connect: { optionName: "large" },
-              },
-              price: 1150,
-            },
-            {
-              option: {
-                connect: { optionName: "dinner" },
-              },
-              price: 1000,
-            },
-          ],
-        },
-        itemCategory: {
-          connect: { categoryName: "chicken" },
-        },
+          },
+        ],
       },
-    });
+      options: {
+        create: [
+          {
+            option: {
+              connect: { optionName: "large" },
+            },
+            price: 1150,
+          },
+          {
+            option: {
+              connect: { optionName: "dinner" },
+            },
+            price: 1000,
+          },
+        ],
+      },
+      itemCategory: {
+        connect: { categoryName: "chicken" },
+      },
+    },
+  });
   const orangeChicken = await prisma.item.upsert({
     where: { itemName: "orange chicken" },
     update: {},
     create: {
       itemName: "orange chicken",
+      description:
+        "Orange chicken is a popular Chinese-American dish that is known for its sweet and tangy flavor. The dish consists of crispy pieces of battered and deep-fried chicken that are coated in a delicious orange sauce made from orange juice, soy sauce, sugar, vinegar, and ginger. The result is a perfect balance of sweet and sour flavors that are sure to tantalize your taste buds. Orange chicken is typically served over a bed of steaming white rice and is a favorite choice for those looking for a delicious and satisfying meal. Its vibrant orange color and zesty flavor make it a feast for both the eyes and the taste buds.",
+      imageUrl:
+        "https://drive.google.com/uc?export=view&id=1-FkDyETBOrfKdMQDO8OCWbs8bUxo9gRJ",
       ingredients: {
         create: [
           {
@@ -452,6 +476,10 @@ async function main() {
     update: {},
     create: {
       itemName: "sesame chicken",
+      description:
+        "Sesame chicken is a flavorful Chinese-American dish that is known for its crispy texture and nutty taste. The dish typically consists of bite-sized pieces of deep-fried chicken that are coated in a savory sauce made from a blend of soy sauce, honey, garlic, and sesame oil. The chicken is then topped with toasted sesame seeds, which gives it a deliciously nutty flavor and crunchy texture. Sesame chicken is often served over a bed of steaming white rice and is a popular choice for those looking for a tasty and satisfying meal. Its combination of savory, sweet, and nutty flavors makes it a favorite dish among Chinese food enthusiasts.",
+      imageUrl:
+        "https://drive.google.com/uc?export=view&id=1-Ds7p5kcZcl4oDGdd-AuUI_PQplLwl_g",
       ingredients: {
         create: [
           {
@@ -498,6 +526,10 @@ async function main() {
     update: {},
     create: {
       itemName: "beef with broccoli",
+      description:
+        "Beef and broccoli is a classic Chinese dish that is loved for its simple yet delicious flavor. The dish typically consists of tender strips of beef that are stir-fried with fresh broccoli florets in a savory sauce made from a blend of soy sauce, garlic, and ginger. The result is a satisfying and flavorful meal that is both nutritious and delicious. Beef and broccoli is often served over a bed of steaming white rice and is a popular choice for those looking for a protein-packed and filling meal. Its simple yet flavorful ingredients make it a go-to dish for anyone looking for a tasty and satisfying meal.",
+      imageUrl:
+        "https://drive.google.com/uc?export=view&id=1-0Iu5SJ3yD8ncBY8V2MalHkedVahYYwG",
       ingredients: {
         create: [
           {
@@ -554,6 +586,10 @@ async function main() {
     update: {},
     create: {
       itemName: "pepper steak with onion",
+      description:
+        "Pepper steak with onion is a delicious Chinese dish that is known for its bold flavors and tender meat. The dish typically consists of thinly sliced beef that is stir-fried with fresh onions and bell peppers in a flavorful sauce made from a blend of soy sauce, oyster sauce, and black pepper. The result is a savory and satisfying meal that is bursting with flavor. Pepper steak with onion is often served over a bed of steaming white rice and is a popular choice for those looking for a protein-packed and hearty meal. Its combination of tender beef, flavorful peppers, and savory sauce make it a favorite dish among Chinese food enthusiasts.",
+      imageUrl:
+        "https://drive.google.com/uc?export=view&id=1-EWwCNqIsvxVqN3hskany3tYtCPFu5s_",
       ingredients: {
         create: [
           {
