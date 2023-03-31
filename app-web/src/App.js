@@ -3,11 +3,16 @@ import { BrowserRouter } from "react-router-dom";
 import Layout from './pages/router/Layout';
 import { useQuery } from "@tanstack/react-query";
 import { useMenuStore, useAllItemStore } from "./store/menuReducer";
+import useUserInfoStore from "./store/authReducer";
 import axios from "axios";
 //TODO call menu and put in store reduce loading time
 const App = () => {
   // fetch data from backend
-
+  const {isLogin, setLogin} = useUserInfoStore((state)=>({
+    isLogin: state.isLogin,
+    setLogin: state.setLogin
+  }));
+  
   const { menu, setMenu } = useMenuStore((state) => ({
     menu: state.menu,
     setMenu: state.setMenu,
@@ -37,6 +42,11 @@ const App = () => {
     console.log("getting all menu");
     getAllItem(menu);
   }, [menu, getAllItem]);
+
+  useEffect(() => {
+    setLogin(Boolean(sessionStorage.getItem("token")));
+  }, [setLogin])
+
   if (isLoading) return "Loading...";
 
   if (error) return "An error has occurred: " + error.message;
