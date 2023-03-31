@@ -1,13 +1,17 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Card } from "react-bootstrap";
-
+import "./item.scss";
 const Item = ({ item }) => {
   return (
     <Card className="my-3 p-3 rounded">
-      {/* <Link to={`/item/${item._id}`}>
-        <Card.Img src={item.image} variant="top" />
-      </Link> */}
+      <Link to={`/menu/menu-item/${item.id}`}>
+        <Card.Img
+          src={item.imageUrl}
+          variant="top"
+          className="square-image img-fluid"
+        />
+      </Link>
 
       <Card.Body>
         <Link to={`/menu/menu-item/${item.id}`}>

@@ -1,6 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
-
+import bcrypt from "bcryptjs";
 async function main() {
   //site main table
   const chinaGarden = await prisma.siteMain.upsert({
@@ -42,7 +42,7 @@ async function main() {
     update: {},
     create: {
       username: "jakeH",
-      password: "1234",
+      password: await bcrypt.hash("1234", 10),
       email: "jakeH@gmail.com",
       firstName: "jake",
       lastName: "huang",
@@ -62,7 +62,7 @@ async function main() {
     update: {},
     create: {
       username: "kaiH",
-      password: "1234",
+      password: await bcrypt.hash("1234", 10),
       email: "kaiH@gmail.com",
       firstName: "kai",
       lastName: "huang",
@@ -82,7 +82,7 @@ async function main() {
     update: {},
     create: {
       username: "jayH",
-      password: "1234",
+      password: await bcrypt.hash("3213586", 10),
       email: "jayH@gmail.com",
       firstName: "jay",
       lastName: "huang",

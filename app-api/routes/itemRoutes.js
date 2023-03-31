@@ -1,6 +1,5 @@
 import express from "express";
 import expressAsyncHandler from "express-async-handler";
-import { menuItems } from "../data.js";
 const router = express.Router();
 
 const itemRoutes = (prisma) => {

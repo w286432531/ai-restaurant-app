@@ -3,7 +3,17 @@ import { Link, NavLink } from "react-router-dom";
 import { Navbar, Nav, Container } from "react-bootstrap";
 import style from "./Header.module.scss";
 import "./Header.scss";
+import useUserInfoStore from "../../store/authReducer";
 const Header = () => {
+  const { isLogin, setLogin } = useUserInfoStore((state) => ({
+    isLogin: state.isLogin,
+    setLogin: state.setLogin,
+  }));
+  const logout = () => {
+    setLogin(false);
+    sessionStorage.removeItem("token");
+  };
+  console.log("is login", isLogin);
   return (
     <header>
       <Navbar className="py-3" bg="light" expand="lg">
@@ -23,6 +33,15 @@ const Header = () => {
               <Nav.Link as={NavLink} to="/menu">
                 Menu
               </Nav.Link>
+              {!isLogin ? (
+                <Nav.Link as={NavLink} to="/login">
+                  Login
+                </Nav.Link>
+              ) : (
+                <button type="button" className="btn btn-link" onClick={logout}>
+                  Logout
+                </button>
+              )}
             </Nav>
           </Navbar.Collapse>
         </Container>

@@ -23,7 +23,7 @@ model SiteMain {
   isOpen            Boolean @default(true)
   ///business phone number
   phone             String
-  menuVersion       Int     
+  menuVersion       Int
 }
 
 model BusinessHour {
@@ -38,7 +38,7 @@ model BusinessHour {
 ///Store user role information
 model Role {
   id                  Int     @id @default(autoincrement())
-  role                String @unique
+  role                String  @unique
   ///if another language is used
   alternativeRoleName String?
   Users               User[]
@@ -46,17 +46,16 @@ model Role {
 
 model User {
   id        Int      @id @default(autoincrement())
-  username  String   @unique
-  ///encrypted
+  username  String?  @unique
   password  String
   email     String   @unique
-  firstName String
-  lastName  String
+  firstName String?
+  lastName  String?
   userRole  Role     @relation(fields: [roleId], references: [id])
   roleId    Int
   phone     String?
   createdAt DateTime @default(now())
-  cart      Json?
+  cart      Json?    
   address   Address?
   orders    Order[]
 }

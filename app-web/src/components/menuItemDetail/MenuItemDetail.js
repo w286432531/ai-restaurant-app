@@ -6,6 +6,8 @@ const MenuItemDetail = () => {
   const allItems = useAllItemStore((state) => state.allItems);
   const params = useParams();
   const item = allItems.filter((item) => item.id === parseInt(params.itemId))[0];
+  const ingredients = item.ingredients.map((ingredient) => ingredient.ingredient.ingredientName)
+  console.log(ingredients);
   console.log(item);
   if (!item) {
     return <div>Loading...</div>;
@@ -20,9 +22,11 @@ const MenuItemDetail = () => {
           <ItemOption key={option.id} option={option} />
         ))}
       </ul>
+      <p>Ingredients: {ingredients.join(',')}</p>
       <img
         src={item.imageUrl}
         alt={item.itemName}
+        className='image-fluid'
       />
       
     </>
