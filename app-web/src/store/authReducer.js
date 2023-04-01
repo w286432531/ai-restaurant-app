@@ -1,9 +1,9 @@
 import { create } from "zustand";
 const useUserInfoStore = create((set) => ({
-  isLogin: [],
+  isLogin: false,
   setLogin: (isLogin) => set({ isLogin: isLogin }),
-  userRole:[],
-  setUserRole: (userRole) => set({userRole: userRole})
+  user:[],
+  setUser: (user) => set({user: user})
 }));
 
 export default useUserInfoStore;

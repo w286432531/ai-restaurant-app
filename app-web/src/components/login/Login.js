@@ -4,7 +4,7 @@ import useUserInfoStore from "../../store/authReducer";
 import GoBack from "../goBack/GoBack";
 import Axios from "axios";
 import { useNavigate } from "react-router-dom";
-import googleSignIn from "../../images/btn_google_signin_light_normal_web.png";
+import GoogleLogin from "../googleLogin/GoogleLogin";
 
 const Login = () => {
     const { isLogin, setLogin } = useUserInfoStore((state) => ({
@@ -29,8 +29,6 @@ const Login = () => {
         if (res.status === 200) {
           // login success
           console.log("success");
-          // store token in session or local storage
-          sessionStorage.setItem("token", res.data.token);
           setLogin(true);
           // get the previous page URL
           const previousPage = document.referrer;
@@ -113,12 +111,7 @@ const Login = () => {
               Not a member?<Link to={"/register"}>Register</Link>
             </p>
           </div>
-          <div>
-            <p>or sign in with:</p>
-            <button type="button" className="btn btn-link">
-              <img src={googleSignIn} alt="" />
-            </button>
-          </div>
+          <GoogleLogin/>
         </form>
       </>
     );
