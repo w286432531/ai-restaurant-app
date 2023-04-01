@@ -47,8 +47,9 @@ model Role {
 model User {
   id        Int      @id @default(autoincrement())
   username  String?  @unique
-  password  String
+  password  String?
   email     String   @unique
+  //TODO make first name and last name required
   firstName String?
   lastName  String?
   userRole  Role     @relation(fields: [roleId], references: [id])

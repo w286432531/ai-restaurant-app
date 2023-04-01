@@ -3,6 +3,8 @@ import GoBack from "../goBack/GoBack";
 import Axios from "axios";
 import useUserInfoStore from "../../store/authReducer";
 import { useNavigate } from "react-router-dom";
+import GoogleLogin from "../googleLogin/GoogleLogin";
+
 const Register = () => {
   const navigate = useNavigate();
   const isLogin = useUserInfoStore((state) => state.isLogin);
@@ -30,8 +32,6 @@ const Register = () => {
           if (res.status === 200) {
             // login success
             console.log("success");
-            // store token in session or local storage
-            sessionStorage.setItem("token", res.data.token);
             navigate("/");
           } else {
             // login failed, handle error
@@ -93,24 +93,7 @@ const Register = () => {
         >
           Register
         </button>
-        {/*
-          <p>or sign up with:</p>
-          <button type="button" className="btn btn-link btn-floating mx-1">
-            <i className="fab fa-facebook-f"></i>
-          </button>
-
-          <button type="button" className="btn btn-link btn-floating mx-1">
-            <i className="fab fa-google"></i>
-          </button>
-
-          <button type="button" className="btn btn-link btn-floating mx-1">
-            <i className="fab fa-twitter"></i>
-          </button>
-
-          <button type="button" className="btn btn-link btn-floating mx-1">
-            <i className="fab fa-github"></i>
-          </button>
-        </div> */}
+        <GoogleLogin/>
       </form>
     );
   }

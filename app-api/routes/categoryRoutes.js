@@ -1,6 +1,5 @@
 import express from "express";
 import expressAsyncHandler from "express-async-handler";
-import { menuCategory } from "../data.js";
 
 const router = express.Router();
 

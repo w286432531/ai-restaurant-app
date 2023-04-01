@@ -35,7 +35,7 @@ CREATE TABLE "Role" (
 CREATE TABLE "User" (
     "id" SERIAL NOT NULL,
     "username" TEXT,
-    "password" TEXT NOT NULL,
+    "password" TEXT,
     "email" TEXT NOT NULL,
     "firstName" TEXT,
     "lastName" TEXT,

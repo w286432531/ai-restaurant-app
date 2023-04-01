@@ -3,15 +3,18 @@ import { Link, NavLink } from "react-router-dom";
 import { Navbar, Nav, Container } from "react-bootstrap";
 import style from "./Header.module.scss";
 import "./Header.scss";
+import axios from "axios";
 import useUserInfoStore from "../../store/authReducer";
 const Header = () => {
   const { isLogin, setLogin } = useUserInfoStore((state) => ({
     isLogin: state.isLogin,
     setLogin: state.setLogin,
   }));
-  const logout = () => {
+
+  const logout = async () => {
     setLogin(false);
-    sessionStorage.removeItem("token");
+    await axios.get("/api/loggedInUser/logout", null, { withCredentials: true }).then((res) => console.log(res.data));
+    window.location.href = "/";
   };
   console.log("is login", isLogin);
   return (

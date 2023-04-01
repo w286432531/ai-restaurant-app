@@ -1,0 +1,26 @@
+{
+  "type": "array",
+  "description": "cart",
+  "items": {
+    "type": "object",
+    "properties": {
+      "orderedItem1": {
+        "type": "object",
+        "properties": {
+          "itemOptionId": {
+            "type": "integer"
+          },
+          "itemTotal": {
+            "type": "integer"
+          },
+          "quantity": {
+            "type": "integer"
+          }
+        }
+      },
+      "orderedItem2": {
+        "type": "object"
+      }
+    }
+  }
+}
