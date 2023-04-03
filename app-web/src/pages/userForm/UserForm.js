@@ -1,8 +1,8 @@
 import React from "react";
 import { Container } from "react-bootstrap";
 import "./UserForm.scss";
-import Login from "../../components/login/Login";
-import Register from "../../components/register/Register";
+import Login from "../../components/authentication/login/Login";
+import Register from "../../components/authentication/register/Register";
 const UserForm = (prop) => {
 
   return (

@@ -4,7 +4,8 @@ import { Navbar, Nav, Container } from "react-bootstrap";
 import style from "./Header.module.scss";
 import "./Header.scss";
 import axios from "axios";
-import useUserInfoStore from "../../store/authReducer";
+import {useUserInfoStore} from "../../store/userReducer";
+import CartIcon from "../icons/CartIcon";
 const Header = () => {
   const { isLogin, setLogin } = useUserInfoStore((state) => ({
     isLogin: state.isLogin,
@@ -45,6 +46,9 @@ const Header = () => {
                   Logout
                 </button>
               )}
+              <button type="button" className="btn ">
+                <CartIcon/>
+              </button>
             </Nav>
           </Navbar.Collapse>
         </Container>
