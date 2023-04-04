@@ -12,8 +12,8 @@ const MenuItemDetail = () => {
   const [item, setItem] = useState(null);
   const [ingredients, setIngredients] = useState([]);
   const [singleOption, setSingleOption] = useState(false);
-  const [selectedOption, setSelectedOption] = useState(0);
-  const [selectedOptionPrice, setSelectedOptionPrice] = useState(0);
+  const [selectedOption, setSelectedOption] = useState(null);
+  const [selectedOptionPrice, setSelectedOptionPrice] = useState(null);
   const [quantity, setQuantity] = useState(1);
   const params = useParams();
   const { cart, setCart, modifyCart } = useCartStore((state) => ({
@@ -47,19 +47,21 @@ const MenuItemDetail = () => {
     setQuantity(newQuantity);
   };
   const addToCart = () => {
-    console.log(
-      selectedOption,
-      quantity,
-      item.itemName,
-      selectedOptionPrice,
-      cart
-    );
+    let optionId = selectedOption === null ? item.options[0].id: selectedOption;
+    let price = selectedOptionPrice === null? item.options[0].price:selectedOptionPrice;
+    // console.log(
+    //   optionId,
+    //   quantity,
+    //   item.itemName,
+    //   price,
+    //   cart
+    // );
     setCart(
       modifyCart(
-        selectedOption,
+        optionId,
         quantity,
         item.itemName,
-        selectedOptionPrice,
+        price,
         cart
       )
     );
@@ -77,9 +79,7 @@ const MenuItemDetail = () => {
       );
 
       setSingleOption(item.options.length === 1);
-      //TODO need to fix this so when the page rerender it doesn't reset 
-      setSelectedOption(item.options[0].id);
-      setSelectedOptionPrice(item.options[0].price);
+      //TODO need to fix this so when the page rerender it doesn't reset
     }
   }, [setItem, item]);
   if (item === null) {
