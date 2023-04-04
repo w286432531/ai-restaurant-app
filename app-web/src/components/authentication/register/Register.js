@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import GoBack from "../goBack/GoBack";
+import GoBack from "../../goBack/GoBack";
 import Axios from "axios";
-import useUserInfoStore from "../../store/authReducer";
+import {useUserInfoStore} from "../../../store/userReducer";
 import { useNavigate } from "react-router-dom";
 import GoogleLogin from "../googleLogin/GoogleLogin";
 

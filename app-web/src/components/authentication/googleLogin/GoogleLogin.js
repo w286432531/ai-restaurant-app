@@ -1,9 +1,11 @@
 import React from 'react'
-import googleSignIn from "../../images/btn_google_signin_light_normal_web.png";
+import googleSignIn from "../../../images/btn_google_signin_light_normal_web.png";
 const GoogleLogin = () => {
-      const googleLogin = () => {
-        window.open("http://localhost:5000/api/user/googleLogin", "_self");
-      };
+
+  const googleLogin = () => {
+    window.open("http://localhost:5000/api/user/googleLogin", "_self");
+  };
+
   return (
     <div>
       <p>or sign in with:</p>

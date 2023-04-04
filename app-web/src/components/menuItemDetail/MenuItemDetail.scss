@@ -1,0 +1,31 @@
+.item-image {
+    height: 50vh;
+    object-fit: cover;
+}
+#quantity-input::-webkit-outer-spin-button,
+#quantity-input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+}
+.quantity-input-group {
+    flex-wrap: nowrap;
+    justify-content: flex-end;
+}
+.item-list{
+    display: flex;
+    list-style: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    align-content: center;
+    flex-wrap: wrap;
+}
+.list-item {
+    border-radius: 0.375rem;
+    border: rgba(0, 0, 0, 0.125) 1px solid;
+    width: 300px;
+    padding: 10px;
+    display: flex;
+}
+.quantity-row {
+    display: flex;
+}

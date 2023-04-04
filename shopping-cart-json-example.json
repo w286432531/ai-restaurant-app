@@ -4,9 +4,16 @@
   "items": {
     "type": "object",
     "properties": {
+      "cartitems":{
       "orderedItem1": {
         "type": "object",
         "properties": {
+          "itemName":{
+            "type":"string"
+          },
+          "itemPrice":{
+            "type":"int"
+          },
           "itemOptionId": {
             "type": "integer"
           },
@@ -20,7 +27,8 @@
       },
       "orderedItem2": {
         "type": "object"
-      }
+      }},
+      "createdAt": "integer"
     }
   }
 }

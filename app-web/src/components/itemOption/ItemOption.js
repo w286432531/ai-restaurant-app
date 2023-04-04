@@ -1,14 +1,23 @@
 import React from "react";
-
-const ItemOption = ({ option }) => {
-  console.log(option.option.optionName);
-  const showOptionName = option.option.optionName === "base";
-  console.log(showOptionName);
+import "./ItemOption.scss";
+const ItemOption = ({ option, singleOption, index }) => {
+  // console.log(option.option.optionName);
+  const showOptionName = !singleOption;
+  // console.log(showOptionName);
   const price = option.price/100;
   return (
     <>
-      {!showOptionName && <p>{option.option.optionName}</p>}
-      <p>${price}</p>
+      <input
+        className="form-check-input"
+        type="radio"
+        value={option.id}
+        name="optionId"
+        defaultChecked={index === 0}
+        price ={option.price}
+      />
+      <label className="form-check-label text-capitalize" htmlFor={option.id}>
+        {showOptionName && option.option.optionName} ${price}
+      </label>
     </>
   );
 };
