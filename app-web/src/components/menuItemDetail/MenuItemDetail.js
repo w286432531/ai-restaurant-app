@@ -13,7 +13,6 @@ const MenuItemDetail = () => {
   const [ingredients, setIngredients] = useState([]);
   const [singleOption, setSingleOption] = useState(false);
   const [selectedOption, setSelectedOption] = useState(null);
-  const [selectedOptionPrice, setSelectedOptionPrice] = useState(null);
   const [quantity, setQuantity] = useState(1);
   const params = useParams();
   const { cart, setCart, modifyCart } = useCartStore((state) => ({
@@ -31,9 +30,8 @@ const MenuItemDetail = () => {
     const optionId = parseInt(e.target.value);
     console.log(optionId);
     setSelectedOption(optionId);
-    let price = item.options.filter((option) => optionId === option.id)[0]
-      .price;
-    setSelectedOptionPrice(price);
+    let currOption = item.options.filter((option) => optionId === option.id)[0];
+    console.log(currOption);
   };
   const addQuantity = () => {
     setQuantity(quantity + 1);
@@ -47,22 +45,35 @@ const MenuItemDetail = () => {
     setQuantity(newQuantity);
   };
   const addToCart = () => {
-    let optionId = selectedOption === null ? item.options[0].id: selectedOption;
-    let price = selectedOptionPrice === null? item.options[0].price:selectedOptionPrice;
+    let optionId =
+      selectedOption === null ? item.options[0].id : selectedOption;
+    let currOption = item.options.filter((option) => optionId === option.id)[0];
+    console.log(currOption);
+    let price = currOption.price;
+    let optionName = currOption.option.optionName;
+    // let price =
+    //   selectedOptionPrice === null
+    //     ? item.options[0].price
+    //     : selectedOptionPrice;
+    // let optionName = item.options;
     // console.log(
+    // cart;
     //   optionId,
     //   quantity,
     //   item.itemName,
     //   price,
-    //   cart
+    //  item.imageUrl
     // );
     setCart(
       modifyCart(
+        cart,
+        false,
         optionId,
         quantity,
         item.itemName,
         price,
-        cart
+        item.imageUrl,
+        optionName
       )
     );
   };
