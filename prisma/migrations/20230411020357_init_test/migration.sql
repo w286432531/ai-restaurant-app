@@ -80,7 +80,7 @@ CREATE TABLE "OrderedItem" (
     "id" SERIAL NOT NULL,
     "orderId" INTEGER NOT NULL,
     "itemOptionId" INTEGER NOT NULL,
-    "itemTotal" INTEGER NOT NULL,
+    "itemPrice" INTEGER NOT NULL,
     "quantity" INTEGER NOT NULL DEFAULT 1,
     "additionalRequest" TEXT,
     "feedback" TEXT,

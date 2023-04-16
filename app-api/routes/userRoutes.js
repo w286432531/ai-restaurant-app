@@ -91,9 +91,108 @@ const loggedInUserRoutes = (prisma, frontEndUrl) => {
         where: {
           email: req.user.email,
         },
+        include: {
+          orders: {
+            orderBy: [
+              {
+                orderCreatedAt: "desc",
+              },
+            ],
+            include: {
+              items: {
+                include: {
+                  itemOption: {
+                    include: {
+                      item: true,
+                      option: true,
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
       });
       delete user["password"];
       res.json(user);
+    })
+  );
+  router.post(
+    "/placeOrder",
+    expressAsyncHandler(async (req, res, next) => {
+      // console.log(req.body);
+      console.log("in back end place order", req.body);
+      console.log(req.user);
+      let orderedItems = [];
+      for (let key in req.body.cartItems) {
+        let value = req.body.cartItems[key];
+        // console.log(key, value);
+        let tmpItem = {
+          itemOption: {
+            connect: { id: parseInt(key) },
+          },
+          quantity: value.quantity,
+          itemPrice: value.price,
+        };
+        orderedItems.push(tmpItem);
+      }
+      console.log("type of ");
+      console.log(typeof orderedItems);
+      console.log(orderedItems);
+      try {
+        console.log("creating order");
+        const order = await prisma.order.create({
+          data: {
+            user: {
+              connect: { id: req.user.id },
+            },
+            total: req.body.total,
+            paymentMethod: "test",
+            paymentConfirmation: "test",
+            paymentAmount: req.body.total,
+            items: {
+              create: orderedItems,
+            },
+          },
+        });
+        const user = await prisma.user.update({
+          where: {
+            email: req.user.email,
+          },
+          data: {
+            cart: { cartItems: {}, updatedAt: Date.now() },
+          },
+        });
+        console.log(user);
+        // delete user["password"];
+        res.json(order);
+      } catch (error) {
+        console.log(error);
+        res.status(500);
+      }
+    })
+  );
+  router.post(
+    "/saveOrder",
+    expressAsyncHandler(async (req, res, next) => {
+      // console.log(req.body);
+      console.log("in back end place order", req.body);
+      try {
+        console.log("creating order");
+        const user = await prisma.user.update({
+          where: {
+            email: req.user.email,
+          },
+          data: {
+            cart: req.body
+          }
+        });
+        delete user["password"];
+        res.json(user);
+      } catch (error) {
+        console.log(error);
+        res.status(500);
+      }
     })
   );
   router.get(

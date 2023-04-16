@@ -41,8 +41,8 @@ const App = () => {
       return axios.post("/api/loggedInUser/profile").then((res) => {
         if (res.status === 200) {
           setUser(res.data);
+          console.log("getting profile");
           console.log(res.data);
-
           return res.data;
         }
       });
