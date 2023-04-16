@@ -20,7 +20,11 @@ const getTotal = (cart) => {
 
 const useCartStore = create((set) => ({
   cart: {},
-  setCart: (cart) => set({ cart: cart }),
+  setCart: (cart) => {
+    console.log('Here is what im logging')
+    console.log(cart)
+    set({ cart: cart })
+  },
   add: (
     cart,
     itemOptionId,
@@ -63,7 +67,7 @@ const useCartStore = create((set) => ({
     cart["total"] = getTotal(cart);
     console.log("in update cart", cart);
     localStorage.setItem("cart", JSON.stringify(cart));
-    return cart;
+    set({ cart: cart})
   },
 
   cleanCart: () => {

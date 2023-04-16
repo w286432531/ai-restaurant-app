@@ -52,7 +52,7 @@ const UserOrdersTable = ({ data }) => {
   }
   return (
     <>
-      <Modal show={showModal} onHide={closeModal} centered>
+      <Modal show={showModal} onHide={closeModal} centered size="lg">
         <Modal.Header closeButton></Modal.Header>
         <Modal.Body>
           <ListGroup>

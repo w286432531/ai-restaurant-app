@@ -1,10 +1,10 @@
 import React from "react";
 import "./ItemOption.scss";
+import currencyFormatter from "../../utility/formatter";
 const ItemOption = ({ option, singleOption, index }) => {
   // console.log(option.option.optionName);
   const showOptionName = !singleOption;
   // console.log(showOptionName);
-  const price = option.price/100;
   return (
     <>
       <input
@@ -13,10 +13,11 @@ const ItemOption = ({ option, singleOption, index }) => {
         value={option.id}
         name="optionId"
         defaultChecked={index === 0}
-        price ={option.price}
+        price={option.price}
       />
       <label className="form-check-label text-capitalize" htmlFor={option.id}>
-        {showOptionName && option.option.optionName} ${price}
+        {showOptionName && option.option.optionName}{" "}
+        {currencyFormatter(option.price)}
       </label>
     </>
   );

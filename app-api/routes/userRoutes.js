@@ -153,7 +153,7 @@ const loggedInUserRoutes = (prisma, frontEndUrl) => {
             items: {
               create: orderedItems,
             },
-          },
+          }
         });
         const user = await prisma.user.update({
           where: {

@@ -34,17 +34,21 @@ const MenuItemDetail = () => {
     let currOption = item.options.filter((option) => optionId === option.id)[0];
     console.log(currOption);
   };
+
   const addQuantity = () => {
     setQuantity(quantity + 1);
   };
+
   const minusQuantity = () => {
     let newQuantity = quantity - 1 > 0 ? quantity - 1 : 1;
     setQuantity(newQuantity);
   };
+
   const changeQuantity = (e) => {
     let newQuantity = e.target.value > 0 ? e.target.value : 1;
     setQuantity(newQuantity);
   };
+
   const addToCart = () => {
     let optionId =
       selectedOption === null ? item.options[0].id : selectedOption;
@@ -79,9 +83,11 @@ const MenuItemDetail = () => {
     );
     setShowModal(true);
   };
+
   useEffect(() => {
     setItem(allItems.filter((item) => item.id === parseInt(params.itemId))[0]);
   }, [params, allItems]);
+
   useEffect(() => {
     if (item) {
       console.log(item);
@@ -95,6 +101,7 @@ const MenuItemDetail = () => {
       //TODO need to fix this so when the page rerender it doesn't reset
     }
   }, [setItem, item]);
+
   if (item === null) {
     return <div>Loading...</div>;
   } else {
