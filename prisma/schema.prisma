@@ -96,7 +96,7 @@ model OrderedItem {
   itemOption        ItemOption         @relation(fields: [itemOptionId], references: [id])
   itemOptionId      Int
   addOns            OrderedItemAddOn[]
-  itemTotal         Int
+  itemPrice         Int
   quantity          Int                @default(1)
   additionalRequest String?
   //internal feedback from customer

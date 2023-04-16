@@ -1,16 +1,17 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import {useUserInfoStore} from "../../../store/userReducer";
+import { useUserInfoStore } from "../../../store/userReducer";
 import GoBack from "../../goBack/GoBack";
 import Axios from "axios";
 import { useNavigate } from "react-router-dom";
 import GoogleLogin from "../googleLogin/GoogleLogin";
-
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 const Login = () => {
-    const { isLogin, setLogin } = useUserInfoStore((state) => ({
-      isLogin: state.isLogin,
-      setLogin: state.setLogin,
-    }));
+  const { isLogin, setLogin } = useUserInfoStore((state) => ({
+    isLogin: state.isLogin,
+    setLogin: state.setLogin,
+  }));
+  const queryClient = useQueryClient();
   const navigate = useNavigate();
   const [userNameInput, setUserNameInput] = useState();
   const [userPassWordInput, setUserPassWordInput] = useState();
@@ -51,6 +52,13 @@ const Login = () => {
         console.log(error);
       });
   };
+    // const loginMutation = useMutation({
+    //   mutationFn: login,
+    //   onSuccess: () => {
+    //     // Invalidate and refetch
+    //     queryClient.invalidateQueries({ queryKey: ["getUserProfile"] });
+    //   },
+    // });
   if (isLogin) {
     return <GoBack message="You already login" />;
   } else {
@@ -111,7 +119,7 @@ const Login = () => {
               Not a member?<Link to={"/register"}>Register</Link>
             </p>
           </div>
-          <GoogleLogin/>
+          <GoogleLogin />
         </form>
       </>
     );

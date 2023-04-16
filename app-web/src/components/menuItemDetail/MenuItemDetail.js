@@ -2,24 +2,25 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import { useAllItemStore } from "../../store/menuReducer";
 import ItemOption from "../itemOption/ItemOption";
-import { Row, Col } from "react-bootstrap";
+import { Row, Col,Modal,Button } from "react-bootstrap";
 import "./MenuItemDetail.scss";
-import MinusIcon from "../icons/MinusIcon";
-import PlusIcon from "../icons/PlusIcon";
 import { useCartStore } from "../../store/userReducer";
+import QuantityControl from "../quantityControl/QuantityControl";
 const MenuItemDetail = () => {
   const allItems = useAllItemStore((state) => state.allItems);
+  const [showModal, setShowModal] = useState(false);
   const [item, setItem] = useState(null);
   const [ingredients, setIngredients] = useState([]);
   const [singleOption, setSingleOption] = useState(false);
   const [selectedOption, setSelectedOption] = useState(null);
   const [quantity, setQuantity] = useState(1);
   const params = useParams();
-  const { cart, setCart, modifyCart } = useCartStore((state) => ({
+  const { cart, setCart, add } = useCartStore((state) => ({
     cart: state.cart,
     setCart: state.setCart,
-    modifyCart: state.modifyCart,
+    add: state.add
   }));
+  const closeModal = () => setShowModal(false);
   // const item = allItems.filter((item) => item.id === parseInt(params.itemId))[0];
   // const ingredients = item.ingredients.map((ingredient) => ingredient.ingredient.ingredientName);
   // const singleOption = item.options.length === 1;
@@ -33,22 +34,26 @@ const MenuItemDetail = () => {
     let currOption = item.options.filter((option) => optionId === option.id)[0];
     console.log(currOption);
   };
+
   const addQuantity = () => {
     setQuantity(quantity + 1);
   };
+
   const minusQuantity = () => {
     let newQuantity = quantity - 1 > 0 ? quantity - 1 : 1;
     setQuantity(newQuantity);
   };
+
   const changeQuantity = (e) => {
     let newQuantity = e.target.value > 0 ? e.target.value : 1;
     setQuantity(newQuantity);
   };
+
   const addToCart = () => {
     let optionId =
       selectedOption === null ? item.options[0].id : selectedOption;
     let currOption = item.options.filter((option) => optionId === option.id)[0];
-    console.log(currOption);
+    // console.log(currOption);
     let price = currOption.price;
     let optionName = currOption.option.optionName;
     // let price =
@@ -65,21 +70,24 @@ const MenuItemDetail = () => {
     //  item.imageUrl
     // );
     setCart(
-      modifyCart(
+      add(
         cart,
-        false,
         optionId,
         quantity,
         item.itemName,
         price,
         item.imageUrl,
-        optionName
+        optionName,
+        item.id
       )
     );
+    setShowModal(true);
   };
+
   useEffect(() => {
     setItem(allItems.filter((item) => item.id === parseInt(params.itemId))[0]);
   }, [params, allItems]);
+
   useEffect(() => {
     if (item) {
       console.log(item);
@@ -93,11 +101,21 @@ const MenuItemDetail = () => {
       //TODO need to fix this so when the page rerender it doesn't reset
     }
   }, [setItem, item]);
+
   if (item === null) {
     return <div>Loading...</div>;
   } else {
     return (
       <>
+        <Modal show={showModal} onHide={closeModal} centered>
+          <Modal.Header closeButton></Modal.Header>
+          <Modal.Body>Item added to cart!</Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={closeModal}>
+              Close
+            </Button>
+          </Modal.Footer>
+        </Modal>
         <h1 className="text-capitalize">{item.itemName}</h1>
         <p>{item.description}</p>
         <p></p>
@@ -114,28 +132,12 @@ const MenuItemDetail = () => {
         </ul>
         <Row>
           <Col className="input-group quantity-input-group">
-            <span
-              className="input-group-text btn btn-secondary"
-              onClick={minusQuantity}
-            >
-              <MinusIcon />
-            </span>
-            <input
-              id="quantity-input"
-              type="number"
-              name="quantity"
-              className="input-number"
-              value={quantity}
-              min="1"
-              max="10"
-              onChange={changeQuantity}
-            />
-            <span
-              className="input-group-text btn btn-secondary"
-              onClick={addQuantity}
-            >
-              <PlusIcon />
-            </span>
+            <QuantityControl
+              addQuantity={addQuantity}
+              minusQuantity={minusQuantity}
+              changeQuantity={changeQuantity}
+              quantity={quantity}
+            ></QuantityControl>
           </Col>
           <Col>
             <button

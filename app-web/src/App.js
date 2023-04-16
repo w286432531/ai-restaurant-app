@@ -41,8 +41,8 @@ const App = () => {
       return axios.post("/api/loggedInUser/profile").then((res) => {
         if (res.status === 200) {
           setUser(res.data);
+          console.log("getting profile");
           console.log(res.data);
-
           return res.data;
         }
       });
@@ -62,6 +62,7 @@ const App = () => {
     console.log("getting all menu");
     getAllItem(menu);
   }, [menu, getAllItem]);
+
   //look up use call back
   const checkLogin = useCallback(async () => {
     try {
@@ -79,11 +80,10 @@ const App = () => {
   }, [setLogin, checkLogin]);
 
   useEffect(() => {
-    const setInitialCart = () => {
       let resultCart = { cartItems: {}, updatedAt: 0 };
       let hasSessionCart = localStorage.getItem("cart") !== null;
       if (user) {
-      let hasDatabaseCart = user.cart !== null;
+        let hasDatabaseCart = user.cart !== null;
       if (hasSessionCart && !hasDatabaseCart) {
         resultCart = JSON.parse(localStorage.getItem("cart"));
       } else if (!hasSessionCart && hasDatabaseCart) {
@@ -99,9 +99,6 @@ const App = () => {
     }
       localStorage.setItem("cart", JSON.stringify(resultCart));
       setCart(resultCart);
-    };
-    setInitialCart();
-    
   }, [setUser, user]);
 
   if (menuQuery.isLoading) return "Loading...";

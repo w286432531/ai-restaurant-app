@@ -7,6 +7,8 @@ import ErrorPage from "../error/Error";
 import MenuItemDetail from "../../components/menuItemDetail/MenuItemDetail";
 import ListCategoryItems from "../../components/listCategoryItems/ListCategoryItems";
 import UserForm from "../userForm/UserForm";
+import Checkout from "../checkout/Checkout";
+import Orders from "../orders/Orders";
 const Routers = () => {
     return (
       <Routes>
@@ -16,9 +18,11 @@ const Routers = () => {
           <Route path="menu-item/:itemId" element={<MenuItemDetail />} />
           <Route path="category/:categoryId" element={<ListCategoryItems />} />
         </Route>
-        <Route path="/login" element={<UserForm page ='login' />} />
-        <Route path="/register" element={<UserForm page ='register' />} />
+        <Route path="/login" element={<UserForm page="login" />} />
+        <Route path="/register" element={<UserForm page="register" />} />
         <Route path="*" element={<ErrorPage />} />
+        <Route path="/checkout" element={<Checkout />} />
+        <Route path="/orders" element={<Orders />} />
       </Routes>
     );
 }

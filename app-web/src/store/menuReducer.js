@@ -13,10 +13,12 @@ import axios from "axios";
 //   axios.get("/api/category/").then((res) => res.data);
 // };
 // console.log(getMenu.data);
+
 const useMenuStore = create((set) => ({
   menu: [],
   setMenu:(menu) => set({ menu:menu}),
 }));
+
 const useAllItemStore = create((set) => ({
   allItems: [],
   getAllItem: (menu) => {
@@ -29,4 +31,5 @@ const useAllItemStore = create((set) => ({
     set({ allItems: items });
   },
 }));
+
 export { useMenuStore, useAllItemStore };
