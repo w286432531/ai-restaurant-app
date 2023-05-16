@@ -31,5 +31,12 @@ const useAllItemStore = create((set) => ({
     set({ allItems: items });
   },
 }));
-
-export { useMenuStore, useAllItemStore };
+const useOptionStore = create((set) => ({
+  options: [],
+  setOptions: (options) => set({ options: options }),
+}));
+const useIngredientStore = create((set) => ({
+  ingredients: [],
+  setIngredients: (ingredients) => set({ ingredients: ingredients }),
+}));
+export { useMenuStore, useAllItemStore, useOptionStore, useIngredientStore};

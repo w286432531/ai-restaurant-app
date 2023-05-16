@@ -153,7 +153,19 @@ const loggedInUserRoutes = (prisma, frontEndUrl) => {
             items: {
               create: orderedItems,
             },
-          }
+          },
+          include: {
+            items: {
+              include: {
+                itemOption: {
+                  include: {
+                    item: true,
+                    option: true,
+                  },
+                },
+              },
+            },
+          },
         });
         const user = await prisma.user.update({
           where: {
@@ -184,8 +196,8 @@ const loggedInUserRoutes = (prisma, frontEndUrl) => {
             email: req.user.email,
           },
           data: {
-            cart: req.body
-          }
+            cart: req.body,
+          },
         });
         delete user["password"];
         res.json(user);

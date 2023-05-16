@@ -56,7 +56,7 @@ model User {
   roleId    Int
   phone     String?
   createdAt DateTime @default(now())
-  cart      Json?    
+  cart      Json?
   address   Address?
   orders    Order[]
 }
@@ -126,6 +126,7 @@ model Item {
   categoryId          Int
   imageUrl            String?
   isAvailable         Boolean          @default(true)
+  isInStock           Boolean          @default(true)
   ///allow customer to remove ingredients
   //todo add remove ingredient functions
   customizable        Boolean          @default(false)
@@ -198,6 +199,7 @@ model ItemOption {
   price        Int
   description  String?
   OrderedItems OrderedItem[]
+  isAvailable  Boolean       @default(true)
 
   @@id([id, itemId])
 }

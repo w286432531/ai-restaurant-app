@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import { Table, Modal, Button, ListGroup, Row,Col } from "react-bootstrap";
 import {
   createColumnHelper,
@@ -14,7 +14,8 @@ const UserOrdersTable = ({ data }) => {
   console.log(data);
   const columnHelper = createColumnHelper();
 
-  const columns = [
+  const columns = useMemo(
+    () => [
     columnHelper.accessor("orderCreatedAt", {
       cell: (info) => info.getValue(),
       header: () => "Order Placed",
@@ -35,8 +36,9 @@ const UserOrdersTable = ({ data }) => {
       header: () => "Payment Amount",
       footer: (info) => info.column.id,
     }),
-  ];
-  console.log(data);
+  ],[columnHelper]);
+
+
   const showDetail = (id) => {
     console.log(id);
     setCurrentRowId(id);
@@ -109,23 +111,8 @@ const UserOrdersTable = ({ data }) => {
             </tr>
           ))}
         </tbody>
-        {/* <tfoot>
-        {table.getFooterGroups().map((footerGroup) => (
-          <tr key={footerGroup.id}>
-            {footerGroup.headers.map((header) => (
-              <th key={header.id}>
-                {header.isPlaceholder
-                  ? null
-                  : flexRender(
-                      header.column.columnDef.footer,
-                      header.getContext()
-                    )}
-              </th>
-            ))}
-          </tr>
-        ))}
-      </tfoot> */}
       </Table>
+      
     </>
   );
 };
