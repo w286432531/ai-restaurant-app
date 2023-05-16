@@ -2,8 +2,18 @@ import React from "react";
 import { Container, Row, Col, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { NotFoundError, ServerError } from '../../components/errors'
+import { useUserInfoStore } from "../../store/userReducer";
+import { useNavigate } from "react-router-dom";
 import mainImg from "../../images/chinese-food-inthed-1120x558-1.webp";
 const Home = () => {
+  const { isLogin, user } = useUserInfoStore((state) => ({
+    isLogin: state.isLogin,
+    user: state.user,
+  }));
+  const navigate = useNavigate();
+  if (user && isLogin && user.roleId > 1) {
+    navigate('/admin');
+  }
   return (
     <Container>
       <Row>

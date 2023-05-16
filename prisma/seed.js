@@ -652,3 +652,5 @@ main()
     await prisma.$disconnect();
     process.exit(1);
   });
+// primsa db push
+// primsa migrate deploy

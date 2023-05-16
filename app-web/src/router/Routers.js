@@ -1,18 +1,18 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
-import Home from "../src/pages/home/Home";
-import AboutUs from "../src/pages/aboutUs/AboutUs";
-import Menu from "../src/pages/menu/Menu";
-import ErrorPage from "../src/pages/error/Error";
-import MenuItemDetail from "../src/components/menuItemDetail/MenuItemDetail";
-import ListCategoryItems from "../src/components/listCategoryItems/ListCategoryItems";
-import Auth from "../src/pages/auth/Auth";
-import Checkout from "../src/pages/checkout/Checkout";
-import Orders from "../src/pages/orders/Orders";
-import AdminHome from "../src/pages/adminHome/AdminHome";
-import ModifyMenu from "../src/pages/modifyMenu/ModifyMenu";
-import Sales from "../src/pages/adminPages/sales/Sales";
-import useUserLoggedIn from "../src/hooks/useIsUserLoggedIn";
+import Home from "../pages/home/Home";
+import AboutUs from "../pages/aboutUs/AboutUs";
+import Menu from "../pages/menu/Menu";
+import ErrorPage from "../pages/error/Error";
+import MenuItemDetail from "../components/menuItemDetail/MenuItemDetail";
+import ListCategoryItems from "../components/listCategoryItems/ListCategoryItems";
+import Auth from "../pages/auth/Auth";
+import Checkout from "../pages/checkout/Checkout";
+import Orders from "../pages/orders/Orders";
+import AdminHome from "../pages/adminPages/adminHome/AdminHome";
+import ModifyMenu from "../pages/adminPages/modifyMenu/ModifyMenu";
+import Sales from "../pages/adminPages/sales/Sales";
+import useUserLoggedIn from "../hooks/useIsUserLoggedIn";
 
 const Routers = () => {
   const isLoggedIn = useUserLoggedIn();

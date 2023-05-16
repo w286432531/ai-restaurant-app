@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { Col, Container, Row, Button, Table, Modal } from "react-bootstrap";
+import { Col, Container, Row, Button, Table, Modal, ListGroup } from "react-bootstrap";
 import { useUserInfoStore, useCartStore } from "../../store/userReducer";
 import { useNavigate, Link } from "react-router-dom";
 import axios from "axios";
 import "./Checkout.scss";
 import QuantityControl from "../../components/quantityControl/QuantityControl";
 import currencyFormatter from "../../utility/formatter";
+import parseOrdersData from "../../utility/parseOrdersData";
 
 const Checkout = () => {
   const queryClient = useQueryClient();
@@ -37,7 +38,7 @@ const Checkout = () => {
           console.log("order success");
           console.log(res.data);
           // cleanCart();
-          return res.data;
+          return parseOrdersData([res.data])[0];
         }
       });
     }
@@ -87,18 +88,32 @@ const Checkout = () => {
   if (isError) {
     return <p>Placing order failed.</p>
   }
-
   if (isSuccess && data) {
-    return (
-      <Container>
-        <h1>You have successfully place a order!</h1>
-        {
-          Object.keys(data).map(orderData => 
-            <p><b>{orderData}:</b> {data[orderData]}</p>
-          )
-        }
-      </Container>
-    );
+        return (
+          <Container className="text-center">
+            <h1>You have successfully place a order!</h1>
+            <br />
+            <ListGroup>
+              {data.items.map((item) => (
+                <ListGroup.Item key={item.id}>
+                  <Row>
+                    <Col>{item.quantity}</Col>
+                    <Col>{item.itemOption.item.itemName}</Col>
+                    <Col>
+                      {item.itemOption.option.optionName !== "base" &&
+                        item.itemOption.option.optionName}
+                    </Col>
+                    <Col>{item.itemPrice}</Col>
+                  </Row>
+                </ListGroup.Item>
+              ))}
+            </ListGroup>
+            <br />
+            <p>Payment method: {data.paymentMethod}</p>
+            <p>Payment confirmation: {data.paymentConfirmation}</p>
+            <p>Total: {data.total}</p>
+          </Container>
+        );
   }
 
   if (

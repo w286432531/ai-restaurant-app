@@ -1,10 +1,11 @@
 import { useEffect, useCallback } from "react";
 import { BrowserRouter } from "react-router-dom";
-import Layout from "./pages/router/Layout";
+import Layout from "./router/Layout";
 import { useQuery } from "@tanstack/react-query";
 import { useMenuStore, useAllItemStore } from "./store/menuReducer";
 import { useUserInfoStore, useCartStore } from "./store/userReducer";
 import axios from "axios";
+
 //TODO call menu and put in store reduce loading time
 const App = () => {
   // fetch data from backend
@@ -28,8 +29,6 @@ const App = () => {
   // const { isLoading, isError, data, error, refetch } = useQuery(
   const menuQuery = useQuery(["WholeMenu"], () => {
     return axios.get("/api/category/").then((res) => {
-      console.log("got menu");
-      console.log(res.data);
       setMenu(res.data);
       return res.data;
     });
@@ -41,14 +40,13 @@ const App = () => {
       return axios.post("/api/loggedInUser/profile").then((res) => {
         if (res.status === 200) {
           setUser(res.data);
-          console.log("getting profile");
           console.log(res.data);
           return res.data;
         }
       });
     },
     {
-      enabled: isLogin,
+      enabled: isLogin === true,
     }
   );
   // console.log(menu);
@@ -57,9 +55,7 @@ const App = () => {
   //   axios.get("/api/category/").then((res) => res.data);
   // };
   // console.log(getMenu.data);
-  console.log(user);
   useEffect(() => {
-    console.log("getting all menu");
     getAllItem(menu);
   }, [menu, getAllItem]);
 
@@ -71,6 +67,8 @@ const App = () => {
         setLogin(true);
       }
     } catch (err) {
+      setLogin(false);
+      setUser({roleId:0});
       return;
     }
   }, [setLogin]);
@@ -80,9 +78,10 @@ const App = () => {
   }, [setLogin, checkLogin]);
 
   useEffect(() => {
+    // set initial cart
       let resultCart = { cartItems: {}, updatedAt: 0 };
       let hasSessionCart = localStorage.getItem("cart") !== null;
-      if (user) {
+      if (isLogin === true) {
         let hasDatabaseCart = user.cart !== null;
       if (hasSessionCart && !hasDatabaseCart) {
         resultCart = JSON.parse(localStorage.getItem("cart"));

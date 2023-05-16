@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import { useAllItemStore } from "../../store/menuReducer";
 import ItemOption from "../itemOption/ItemOption";
-import { Row, Col,Modal,Button } from "react-bootstrap";
+import { Row, Col, Modal, Button } from "react-bootstrap";
 import "./MenuItemDetail.scss";
 import { useCartStore } from "../../store/userReducer";
 import QuantityControl from "../quantityControl/QuantityControl";
@@ -18,7 +18,7 @@ const MenuItemDetail = () => {
   const { cart, setCart, add } = useCartStore((state) => ({
     cart: state.cart,
     setCart: state.setCart,
-    add: state.add
+    add: state.add,
   }));
   const closeModal = () => setShowModal(false);
   // const item = allItems.filter((item) => item.id === parseInt(params.itemId))[0];
@@ -31,7 +31,7 @@ const MenuItemDetail = () => {
     const optionId = parseInt(e.target.value);
     console.log(optionId);
     setSelectedOption(optionId);
-    let currOption = item.options.filter((option) => optionId === option.id)[0];
+    let currOption = item.options.find((option) => optionId === option.id);
     console.log(currOption);
   };
 
@@ -52,7 +52,7 @@ const MenuItemDetail = () => {
   const addToCart = () => {
     let optionId =
       selectedOption === null ? item.options[0].id : selectedOption;
-    let currOption = item.options.filter((option) => optionId === option.id)[0];
+    let currOption = item.options.find((option) => optionId === option.id);
     // console.log(currOption);
     let price = currOption.price;
     let optionName = currOption.option.optionName;
@@ -150,11 +150,13 @@ const MenuItemDetail = () => {
           </Col>
         </Row>
         <p>Ingredients: {ingredients.join(",")}</p>
-        <img
-          src={item.imageUrl}
-          alt={item.itemName}
-          className="item-image image-fluid"
-        />
+        {item.imageUrl !== "" && (
+          <img
+            src={item.imageUrl}
+            alt={item.itemName}
+            className="item-image image-fluid"
+          />
+        )}
       </>
     );
   }

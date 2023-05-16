@@ -6,11 +6,11 @@ const Item = ({ item }) => {
   return (
     <Card className="my-3 p-3 rounded">
       <Link to={`/menu/menu-item/${item.id}`}>
-        <Card.Img
+        {item.imageUrl !== ''&&<Card.Img
           src={item.imageUrl}
           variant="top"
           className="square-image img-fluid"
-        />
+        />}
       </Link>
 
       <Card.Body>

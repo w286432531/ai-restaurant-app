@@ -13,6 +13,9 @@ const categoryRoutes = (prisma) => {
       const categories = await prisma.category.findMany({
         include: {
           items: {
+            // where: {
+            //   active: true
+            // },
             include: {
               options: {
                 include: {
